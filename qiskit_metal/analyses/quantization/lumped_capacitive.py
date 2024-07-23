@@ -243,10 +243,12 @@ def extract_transmon_coupled_Noscillator(capMatrix,
         -capMatrix[qubit_index[0], ground_index],
         -capMatrix[qubit_index[1], ground_index]
     ]
+    print('This is Cg:' % Cg)
 
     # Cs qubit pads to each other
     Cs = -capMatrix[qubit_index[0], qubit_index[1]]
-
+    print('This is Cs:' % Cs)
+    
     # Cbus (qubit pads to coupling pads)
     # index is ordered as [readout,bus1,...]
     Cbus = np.zeros([2, N])
@@ -266,13 +268,17 @@ def extract_transmon_coupled_Noscillator(capMatrix,
     C1S = Cg[0] + np.sum(Cbus[
         0,
     ])
+    print('This is C1S:' % C1S)
+    
     C2S = Cg[1] + np.sum(Cbus[
         1,
     ])
+    print('This is C2S:' % C2S)
 
     # total capacitance between pads
     tCSq = Cs + C1S * C2S / (C1S + C2S)  # Key equation
-
+    print("This is tCSq:" % tCSq)
+    
     # total capacitance of each pad to ground?
     # Note the + in the squared term below !!!
     tCSbus = np.zeros(N)
@@ -419,6 +425,8 @@ def extract_transmon_coupled_Noscillator(capMatrix,
                                               (2 * np.pi * 1e6)))
 
     return ham_dict
+
+
 
 
 def levels_vs_ng_real_units(Cq, IC, N=301, do_disp=0, do_plots=0):
